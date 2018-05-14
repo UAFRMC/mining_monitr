@@ -1,0 +1,22 @@
+<html>
+  <body>
+    <img id="bg" src="{{ url_for('get_image') }}">
+    <button onclick="get_new_image()">New Image</button>
+    </body>
+	<script>
+  		function get_new_image()
+  		{
+  			location.reload(true);
+  		}
+  		document.body.onkeyup = function(e)
+  		{
+  			console.log(e.keyCode);
+  			if (e.keyCode == 32)
+  			{
+  				console.log("SPACEBAR");
+  				get_new_image();
+  			}
+  		}
+  	</script>
+
+</html>
