@@ -1,13 +1,18 @@
 <html>
   <body>
-    <img id="bg" src="{{ url_for('get_image') }}">
+    <img id="bg" src="{{ url_for('get_image') }}"></img>
     <button onclick="get_new_image()">New Image</button>
-    </body>
 	<script>
+		var auto_image_refresh=false;
+		var auto_image_refresh_interval = 1*1000; //1 second
+		var interval_ID
   		function get_new_image()
   		{
-  			location.reload(true);
-  		}
+        	var latest_pic = document.getElementById("bg");
+        	console.log("I ran it");
+        	console.log(latest_pic);
+        	latest_pic.src="{{url_for('get_image')}}?test="+new Date().getTime();
+  		} 
   		document.body.onkeyup = function(e)
   		{
   			console.log(e.keyCode);
@@ -16,7 +21,23 @@
   				console.log("SPACEBAR");
   				get_new_image();
   			}
+        	if (e.keyCode ==13)
+        	{
+          		console.log("ENTER");
+          		auto_image_refresh = !auto_image_refresh;
+          		console.log("AUTO REFRESH:"+auto_image_refresh);
+          		if (auto_image_refresh)
+          		{
+          			console.log("REFRESH");
+          			interval_ID = setInterval(get_new_image,auto_image_refresh_interval);
+          		}
+          		else
+          		{
+          			clearInterval(interval_ID);
+          		}
+        	}
   		}
-  	</script>
 
+  	</script>
+</body>
 </html>
