@@ -2,16 +2,23 @@
   <body>
     <img id="bg" src="{{ url_for('get_image') }}"></img>
     <button onclick="get_new_image()">New Image</button>
+    Refresh Interval (sec): <input type="number" id="refresh_interval" min=1 value=1></input>
 	<script>
 		var auto_image_refresh=false;
-		var auto_image_refresh_interval = 1*1000; //1 second
-		var interval_ID
+		var auto_image_refresh_interval = document.getElementById("refresh_interval").value*1000; //1 second
+		var interval_ID;
+		document.getElementById("refresh_interval").addEventListener('input',function()
+			{
+				auto_image_refresh_interval = document.getElementById("refresh_interval").value*1000;
+				clearInterval(interval_ID);
+				interval_ID = setInterval(get_new_image,auto_image_refresh_interval);
+			});
   		function get_new_image()
   		{
         	var latest_pic = document.getElementById("bg");
         	console.log("I ran it");
-        	console.log(latest_pic);
-        	latest_pic.src="{{url_for('get_image')}}?test="+new Date().getTime();
+        	console.log("Interval Time:"+ auto_image_refresh_interval);
+        	latest_pic.src="{{url_for('get_image')}}?time="+new Date().getTime();
   		} 
   		document.body.onkeyup = function(e)
   		{
@@ -28,8 +35,8 @@
           		console.log("AUTO REFRESH:"+auto_image_refresh);
           		if (auto_image_refresh)
           		{
-          			console.log("REFRESH");
           			interval_ID = setInterval(get_new_image,auto_image_refresh_interval);
+          			console.log("interval_ID:"+interval_ID);
           		}
           		else
           		{

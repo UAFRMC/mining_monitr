@@ -1,0 +1,7 @@
+#! /bin/bash
+
+sudo rm -rf /tmp/yourapplication.sock
+uwsgi -s /tmp/yourapplication.sock --manage-script-name --mount /yourapplication=main:app --master --processes 2 --threads 2 > "log_$(date +%Y_%_m_%d-%H:%M:%S).txt" 2>&1 &
+sleep 2
+sudo chown www-data:www-data /tmp/yourapplication.sock
+
