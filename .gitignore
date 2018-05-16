@@ -1,0 +1,9 @@
+captured/*
+log_*
+*.zip
+# Ignore all virtualenv dirs
+bin/*
+include/*
+lib/*
+local/*
+__pycache__/*
